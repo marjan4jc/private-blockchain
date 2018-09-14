@@ -1,28 +1,28 @@
 /* ===== Persist data with LevelDB ===================================
 |  Learn more: level: https://github.com/Level/level     |
 |  =============================================================*/
-
 const level = require('level');
 const chainDB = './chaindata';
 const db = level(chainDB);
 
+module.exports = {
 // Add data to levelDB with key/value pair
-function addLevelDBData(key,value){
+	addLevelDBData: function(key,value){
   db.put(key, value, function(err) {
     if (err) return console.log('Block ' + key + ' submission failed', err);
   })
-}
+},
 
 // Get data from levelDB with key
-function getLevelDBData(key){
-  db.get(key, function(err, value) {
-    if (err) return console.log('Not found!', err);
-    console.log('Value = ' + value);
-  })
-}
+   getLevelDBData: function(key){
+       db.get(key, function(err, value) {
+       if (err) return console.log('Not found!', err);
+       console.log('Value = ' + value);
+       })
+},
 
 // Add data to levelDB with value
-function addDataToLevelDB(value) {
+addDataToLevelDB: function(value) {
     let i = 0;
     db.createReadStream().on('data', function(data) {
           i++;
@@ -33,7 +33,7 @@ function addDataToLevelDB(value) {
           addLevelDBData(i, value);
         });
 }
-
+};
 /* ===== Testing ==============================================================|
 |  - Self-invoking function to add blocks to chain                             |
 |  - Learn more:                                                               |
@@ -45,10 +45,11 @@ function addDataToLevelDB(value) {
 |     ( new block every 10 minutes )                                           |
 |  ===========================================================================*/
 
-
+/*
 (function theLoop (i) {
   setTimeout(function () {
     addDataToLevelDB('Testing data');
     if (--i) theLoop(i);
   }, 100);
 })(10);
+*/

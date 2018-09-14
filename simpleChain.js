@@ -3,7 +3,7 @@
 |  =========================================================*/
 
 const SHA256 = require('crypto-js/sha256');
-
+const levelSandbox = require('./levelSandbox')
 
 /* ===== Block Class ==============================
 |  Class with a constructor for block 			   |
@@ -37,7 +37,7 @@ class Blockchain{
     newBlock.time = new Date().getTime().toString().slice(0,-3);
     // previous block hash
     if(this.chain.length>0){
-      newBlock.previousBlockHash = this.chain[this.chain.length-1].hash;
+      newBlock.previousBlockHash = this.chain[this.chain.length-1].hash;    
     }
     // Block hash with SHA256 using newBlock and converting to a string
     newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
@@ -95,4 +95,6 @@ class Blockchain{
         console.log('No errors detected');
       }
     }
+}
+
 }
